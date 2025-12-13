@@ -1,4 +1,4 @@
-// import React, { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Container,
   Table,
@@ -9,33 +9,37 @@ import {
   TableRow,
 } from "@mui/material";
 // import { useNavigate } from "react-router-dom";
-// import useUsers from "../users/hooks/useUsers";
+import useUsers from "../users/hooks/useUsers";
 // import { getUser } from "../users/services/localStorageService";
 // import Error from "../components/Error";
 // import Spinner from "../components/Spinner";
 import PageHeader from "../components/PageHeader";
+import UsersTableContent from "./UsersTableContent";
 // import UsersTableContent from "./UsersTableContent";
 // import ROUTES from "../routs/routsModel";
 
 export default function UsersTable() {
-  // const {
-  //   handleDeleteUser,
-  //   handleChangeBusinessStatus,
-  //   handleGetAllUsers,
-  //   error,
-  //   isLoading,
-  // } = useUsers();
+  const {
+    // handleDeleteUser,
+    handleGetAllUsers,
+    // error,
+    // isLoading,
+  } = useUsers();
   // const navigate = useNavigate();
-  // const [usersData, setUsersData] = useState([]);
+  const [usersData, setUsersData] = useState([]);
   // const handleChangeCheckBox = handleChangeBusinessStatus;
+  const didFetch = useRef(false);
 
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     const data = await handleGetAllUsers();
-  //     setUsersData(data);
-  //   };
-  //   getData();
-  // }, [handleGetAllUsers, navigate]);
+  useEffect(() => {
+    if (didFetch.current) return;
+    didFetch.current = true;
+
+    const getData = async () => {
+      const data = await handleGetAllUsers();
+      setUsersData(data);
+    };
+    getData();
+  }, [handleGetAllUsers]);
 
   // if (error) return <Error errorMessage={error} />;
   // if (isLoading) return <Spinner />;
@@ -59,14 +63,13 @@ export default function UsersTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {/* {usersData.map((user) => (
+            {usersData.map((user) => (
               <UsersTableContent
                 key={user._id}
                 user={user}
-                handleChangeCheckBox={handleChangeCheckBox}
-                handleDeleteUser={handleDeleteUser}
+                // handleDeleteUser={handleDeleteUser}
               />
-            ))} */}
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
