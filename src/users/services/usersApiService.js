@@ -2,6 +2,15 @@ import axios from "axios";
 
 const apiUrl = "https://localhost:7230/user";
 
+const createNewUser = async (user) => {
+  try {
+    const { response } = await axios.post(apiUrl, user);
+    return response;
+  } catch (error) {
+    throw new Error(error.response.data);
+  }
+};
+
 const getUserData = async (id) => {
   try {
     const { data } = await axios.get(`${apiUrl}/${id}`);
@@ -38,4 +47,4 @@ const deleteUser = async (id) => {
   }
 };
 
-export { getUserData, updateUser, getAllUsers, deleteUser };
+export { createNewUser, getUserData, updateUser, getAllUsers, deleteUser };

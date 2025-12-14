@@ -7,27 +7,25 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Button,
+  Zoom,
+  Tooltip,
 } from "@mui/material";
-// import { useNavigate } from "react-router-dom";
-import useUsers from "../users/hooks/useUsers";
-// import { getUser } from "../users/services/localStorageService";
-// import Error from "../components/Error";
-// import Spinner from "../components/Spinner";
-import PageHeader from "../components/PageHeader";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { useNavigate } from "react-router-dom";
+import useUsers from "../hooks/useUsers";
+import Error from "../../components/Error";
+import Spinner from "../../components/Spinner";
+import PageHeader from "../../components/PageHeader";
+
+import ROUTES from "../../routs/routsModel";
 import UsersTableContent from "./UsersTableContent";
-// import UsersTableContent from "./UsersTableContent";
-// import ROUTES from "../routs/routsModel";
 
 export default function UsersTable() {
-  const {
-    // handleDeleteUser,
-    handleGetAllUsers,
-    // error,
-    // isLoading,
-  } = useUsers();
-  // const navigate = useNavigate();
+  const { handleDeleteUser, handleGetAllUsers, error, isLoading } = useUsers();
+  const navigate = useNavigate();
   const [usersData, setUsersData] = useState([]);
-  // const handleChangeCheckBox = handleChangeBusinessStatus;
+
   const didFetch = useRef(false);
 
   useEffect(() => {
@@ -41,15 +39,11 @@ export default function UsersTable() {
     getData();
   }, [handleGetAllUsers]);
 
-  // if (error) return <Error errorMessage={error} />;
-  // if (isLoading) return <Spinner />;
-  // if (usersData.length > 0) {
+  if (error) return <Error errorMessage={error} />;
+  if (isLoading) return <Spinner />;
   return (
     <Container maxWidth="xl">
-      <PageHeader
-        title="Users Table"
-        subtitle="Here you can view users details and update Business state"
-      />
+      <PageHeader title="Users Table" />
       <TableContainer>
         <Table>
           <TableHead>
@@ -60,14 +54,25 @@ export default function UsersTable() {
               <TableCell>Birth Date</TableCell>
               <TableCell>Gender</TableCell>
               <TableCell>Phone</TableCell>
+              <TableCell>
+                <Button onClick={() => navigate(ROUTES.CREATE_USER)}>
+                  <Tooltip
+                    title="Add Customer"
+                    TransitionComponent={Zoom}
+                    arrow
+                  >
+                    <AddCircleIcon />
+                  </Tooltip>
+                </Button>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {usersData.map((user) => (
               <UsersTableContent
-                key={user._id}
+                key={user.id}
                 user={user}
-                // handleDeleteUser={handleDeleteUser}
+                handleDeleteUser={handleDeleteUser}
               />
             ))}
           </TableBody>
@@ -76,6 +81,3 @@ export default function UsersTable() {
     </Container>
   );
 }
-
-// return null;
-// }

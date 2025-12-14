@@ -3,7 +3,13 @@ import { AppBar, Toolbar } from "@mui/material";
 
 export default function NavBar() {
   return (
-    <AppBar position="sticky" color="primary" elevation={10}>
+    <AppBar
+      position="sticky"
+      elevation={10}
+      sx={{
+        backgroundColor: "#e29829ff",
+      }}
+    >
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <LeftNavBar />
       </Toolbar>

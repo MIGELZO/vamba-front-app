@@ -6,7 +6,7 @@ export default function Footer() {
       elevation={3}
       sx={{ position: "sticky", bottom: 0, left: 0, right: 0, zIndex: 1 }}
     >
-      THIS is footer
+      כאן אפשר לראות פוטר לא מושקע בעליל
     </Paper>
   );
 }

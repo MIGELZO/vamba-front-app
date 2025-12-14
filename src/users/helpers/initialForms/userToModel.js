@@ -1,8 +1,8 @@
 const userToModel = (UserData) => {
   return {
-    personalId: UserData.personalId,
-    first: UserData.firstName,
-    last: UserData.lastName,
+    pId: UserData.personalId,
+    firstName: UserData.firstName,
+    lastName: UserData.lastName,
     email: UserData.email,
     birthDate: UserData.birthDate.slice(0, 10),
     gender: UserData.gender,
