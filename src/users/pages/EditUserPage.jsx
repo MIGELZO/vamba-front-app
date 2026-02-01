@@ -4,7 +4,6 @@ import Container from "@mui/material/Container";
 import useUsers from "../hooks/useUsers";
 import { useAlert } from "../../providers/AlertProvider";
 import { useLocation, useNavigate } from "react-router-dom";
-import Error from "../../components/Error";
 import Spinner from "../../components/Spinner";
 import EditUserForm from "../components/EditUserForm";
 import initialEditForm from "../helpers/initialForms/initialEditForm";
@@ -13,7 +12,7 @@ import userToModel from "../helpers/initialForms/userToModel";
 import ROUTES from "../../routs/routsModel";
 
 export default function EditUserPage() {
-  const { handleUpdateUser, error, isLoading } = useUsers();
+  const { handleUpdateUser, isLoading } = useUsers();
   const navigate = useNavigate();
   const location = useLocation();
   const user = location.state?.user;
@@ -46,7 +45,6 @@ export default function EditUserPage() {
     onSubmit(onSubmit);
   };
 
-  if (error) return <Error errorMessage={error} />;
   if (isLoading) return <Spinner />;
   return (
     <Container

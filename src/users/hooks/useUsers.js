@@ -23,13 +23,14 @@ export default function useUsers() {
       try {
         const normalizedUser = normalizeUser(userFromClient);
         await createNewUser(normalizedUser);
+        snackbarActivation("success", "User created successfully", "filled");
+        navigate(ROUTES.HOME_PAGE);
       } catch (error) {
         setError(error.message);
         snackbarActivation("error", error.message, "filled");
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
-      snackbarActivation("success", "User created successfully", "filled");
-      navigate(ROUTES.HOME_PAGE);
     },
     [snackbarActivation, navigate]
   );
@@ -47,11 +48,13 @@ export default function useUsers() {
           "success",
           `${normalizedUser.firstName} your details has been successfully updated`
         );
+        navigate(ROUTES.ROOT);
       } catch (error) {
         setError(error.message);
+        snackbarActivation("error", error.message, "filled");
+      } finally {
+        setIsLoading(false);
       }
-      navigate(ROUTES.ROOT);
-      setIsLoading(false);
     },
     [snackbarActivation, navigate]
   );

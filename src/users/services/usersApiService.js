@@ -4,10 +4,14 @@ const apiUrl = "https://localhost:7230/user";
 
 const createNewUser = async (user) => {
   try {
-    const { response } = await axios.post(apiUrl, user);
-    return response;
+    const { data } = await axios.post(apiUrl, user);
+    return data;
   } catch (error) {
-    throw new Error(error.response.data);
+    const message = error.response?.data?.errors
+      ? Object.values(error.response.data.errors).flat().join(", ")
+      : error.response?.data?.title || "Request failed";
+
+    throw new Error(message);
   }
 };
 
@@ -25,7 +29,11 @@ const updateUser = async (id, normalizedExistingUser) => {
     const { data } = await axios.put(`${apiUrl}/${id}`, normalizedExistingUser);
     return data;
   } catch (error) {
-    throw new Error(error.message.data);
+    const message = error.response?.data?.errors
+      ? Object.values(error.response.data.errors).flat().join(", ")
+      : error.response?.data?.title || "Request failed";
+
+    throw new Error(message);
   }
 };
 

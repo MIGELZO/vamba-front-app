@@ -5,16 +5,14 @@ import CreateUserForm from "../components/CreateUserForm";
 import Container from "@mui/material/Container";
 import useUsers from "../hooks/useUsers";
 import Spinner from "../../components/Spinner";
-import Error from "../../components/Error";
 
 export default function CreateUserPage() {
-  const { handleCreateUser, error, isLoading } = useUsers();
+  const { handleCreateUser, isLoading } = useUsers();
 
   const { data, errors, handleChange, handleReset, validateForm, onSubmit } =
     useForm(initialCreateUserForm, createUserSchema, handleCreateUser);
 
   if (isLoading) return <Spinner />;
-  if (error) return <Error />;
   return (
     <Container
       sx={{

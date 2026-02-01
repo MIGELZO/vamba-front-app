@@ -20,8 +20,11 @@ const editUserSchema = {
     .message('user "mail" must be a valid mail'),
   phone: Joi.string()
     .allow("", null)
-    .regex(/0[0-9]{1,2}-?\s?[0-9]{3}\s?[0-9]{4}/)
-    .message('user "phone" must be a valid phone number'),
+    // .regex(/0[0-9]{1,2}-?\s?[0-9]{3}\s?[0-9]{4}/) // here for error handeling check if needed, throwing bad request 400
+    .regex(/^0[0-9]{8,9}$/)
+    .message(
+      'user "phone" must be a valid phone number and contains numbers only'
+    ),
   birthDate: Joi.date().required().messages({
     "date.base": 'user "birthDate" must be a valid date',
   }),
